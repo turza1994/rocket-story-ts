@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import logo from './logo.svg'
-import './App.css'
 import { fetchAsyncRockets } from './redux/rockets/rocketSlice'
+import Navbar from './components/Navbar/Navbar'
+import FilterArea from './components/FilterArea/FilterArea'
 
 function App() {
 	const dispatch = useDispatch()
@@ -14,21 +14,10 @@ function App() {
 	}, [dispatch])
 
 	return (
-		<div className='App'>
-			<header className='App-header'>
-				<img src={logo} className='App-logo' alt='logo' />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a
-					className='App-link'
-					href='https://reactjs.org'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					Learn React
-				</a>
-			</header>
+		<div className='App bg-secondary bg-gradient vh-100'>
+			<Navbar />
+			<FilterArea />
+			<h1>Hello</h1>
 		</div>
 	)
 }
