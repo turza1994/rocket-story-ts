@@ -2,12 +2,15 @@ import React from 'react'
 
 function FilterArea() {
 	return (
-		<div className='bg-dark text-light py-3 fixed-bottom'>
+		<div
+			className='text-light py-2 fixed-bottom'
+			style={{ backgroundColor: 'black' }}
+		>
 			<div className='container d-flex justify-content-around align-items-center'>
 				<h5 className='pt-2'>Filter:</h5>
 
 				<select
-					className='form-select w-25 bg-secondary text-light fw-bold fs-5 border-dark'
+					className='form-select w-25 bg-dark text-light fw-bold fs-5 border-dark'
 					aria-label='Default select example'
 				>
 					<option>By Launch Date</option>
@@ -17,7 +20,7 @@ function FilterArea() {
 				</select>
 
 				<select
-					className='form-select w-25 bg-secondary text-light fw-bold fs-5 border-dark'
+					className='form-select w-25 bg-dark text-light fw-bold fs-5 border-dark'
 					aria-label='Default select example'
 				>
 					<option>By Launch Status</option>

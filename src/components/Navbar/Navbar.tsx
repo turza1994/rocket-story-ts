@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 
 function Navbar() {
 	return (
-		<nav className='navbar navbar-expand-lg navbar-dark bg-dark fixed-top fw-bolder mb-5 py-3'>
+		<nav
+			className='navbar navbar-expand-lg navbar-dark fixed-top fw-bolder mb-5 py-2'
+			style={{ backgroundColor: 'black' }}
+		>
 			<div className='container'>
 				<Link className='navbar-brand fw-bolder fst-italic' to='/'>
 					Rocket Story
