@@ -56,6 +56,9 @@
 		"react/destructuring-assignment": "off",
 		"camelcase": "off",
 		"no-unused-vars": "off",
-		"no-param-reassign": "off"
+		"no-param-reassign": "off",
+		"no-nested-ternary": "off",
+		"radix": "off",
+		"arrow-body-style": "off"
 	}
 }

@@ -25,6 +25,41 @@ const rocketSlice = createSlice({
 				rocket.rocket.rocket_name.toLowerCase().includes(searchString.toLowerCase())
 			)
 		},
+
+		filterByLaunchDate: (state: any, { payload }: any) => {
+			const filterString = parseInt(payload)
+			const date = new Date().getUTCDate()
+			// console.log(date.getTime())
+			state.filteredRockets = state.rockets.filter((rocket: any) => {
+				return (date - rocket.launch_date_unix) / (1000 * 60 * 60 * 24) <= 900
+			})
+		},
+
+		filterByLaunchStatus: (state: any, { payload }: any) => {
+			if (payload === '0') {
+				state.filteredRockets = state.rockets.filter(
+					(rocket: any) => !rocket.launch_success
+				)
+			}
+			if (payload === '1') {
+				state.filteredRockets = state.rockets.filter(
+					(rocket: any) => rocket.launch_success
+				)
+			}
+		},
+
+		filterByUpcomingStatus: (state: any, { payload }: any) => {
+			if (!payload) {
+				state.filteredRockets = state.rockets.filter(
+					(rocket: any) => !rocket.launch_success
+				)
+			}
+			if (payload) {
+				state.filteredRockets = state.rockets.filter(
+					(rocket: any) => rocket.launch_success
+				)
+			}
+		},
 	},
 	extraReducers: {
 		[fetchAsyncRockets.pending]: (state: any) => {
@@ -46,6 +81,11 @@ const rocketSlice = createSlice({
 	},
 })
 
-export const { searchByName } = rocketSlice.actions
+export const {
+	searchByName,
+	filterByLaunchDate,
+	filterByLaunchStatus,
+	filterByUpcomingStatus,
+} = rocketSlice.actions
 export const getAllRockets = (state: any) => state.rockets.rockets
 export default rocketSlice.reducer

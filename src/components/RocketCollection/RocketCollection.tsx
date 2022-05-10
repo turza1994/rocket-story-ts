@@ -21,6 +21,10 @@ function RocketCollection() {
 							<span className='visually-hidden'>Loading...</span>
 						</div>
 					</div>
+				) : rockets?.filteredRockets.length === 0 ? (
+					<h1 className='vh-100 text-light d-flex justify-content-center align-items-center'>
+						No Result Found
+					</h1>
 				) : (
 					rockets?.filteredRockets.map((rocket: any) => (
 						<RocketCard key={rocket?.mission_name} data={rocket} />

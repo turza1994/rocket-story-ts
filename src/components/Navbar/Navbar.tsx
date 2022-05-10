@@ -10,6 +10,7 @@ function Navbar() {
 	const onFormSubmit = (e: any) => {
 		e.preventDefault()
 		dispatch(searchByName(searchString))
+		setSearchString('')
 	}
 
 	return (
@@ -40,6 +41,7 @@ function Navbar() {
 							className='form-control me-2 fs-5'
 							type='search'
 							placeholder='Search rockets by name'
+							value={searchString}
 							aria-label='Search'
 							onChange={e => setSearchString(e.target.value)}
 						/>
