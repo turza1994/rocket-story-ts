@@ -5,7 +5,7 @@ import RocketCard from '../RocketCard/RocketCard'
 
 function RocketCollection() {
 	const dispatch = useDispatch()
-	const rockets = useSelector((state: any) => state.rockets.rockets)
+	const rockets = useSelector((state: any) => state.rockets)
 	console.log(rockets)
 
 	useEffect(() => {
@@ -15,9 +15,17 @@ function RocketCollection() {
 	return (
 		<div className='container mt-5 pt-5 mb-5'>
 			<div className='row g-4 justify-content-center align-items-center'>
-				{rockets.map((rocket: any) => (
-					<RocketCard key={rocket?.mission_name} data={rocket} />
-				))}
+				{rockets?.loading ? (
+					<div className='vh-100 w-100 d-flex justify-content-center align-items-center'>
+						<div className='spinner-border text-danger' role='status'>
+							<span className='visually-hidden'>Loading...</span>
+						</div>
+					</div>
+				) : (
+					rockets?.filteredRockets.map((rocket: any) => (
+						<RocketCard key={rocket?.mission_name} data={rocket} />
+					))
+				)}
 			</div>
 		</div>
 	)

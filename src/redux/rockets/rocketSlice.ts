@@ -11,19 +11,34 @@ export const fetchAsyncRockets: any = createAsyncThunk(
 
 const initialState = {
 	rockets: [],
+	filteredRockets: [],
+	loading: false,
 }
 
 const rocketSlice = createSlice({
 	name: 'rockets',
 	initialState,
-	reducers: {},
+	reducers: {
+		searchByName: (state: any, { payload }: any) => {
+			const searchString = payload
+			state.filteredRockets = state.rockets.filter((rocket: any) =>
+				rocket.rocket.rocket_name.toLowerCase().includes(searchString.toLowerCase())
+			)
+		},
+	},
 	extraReducers: {
-		[fetchAsyncRockets.pending]: () => {
+		[fetchAsyncRockets.pending]: (state: any) => {
 			console.log('Pending')
+			return { ...state, loading: true }
 		},
 		[fetchAsyncRockets.fulfilled]: (state: any, { payload }: any) => {
 			console.log('Fetched Successfully!')
-			return { ...state, rockets: payload }
+			return {
+				...state,
+				loading: false,
+				rockets: payload,
+				filteredRockets: payload,
+			}
 		},
 		[fetchAsyncRockets.rejected]: () => {
 			console.log('Rejected!')
@@ -31,5 +46,6 @@ const rocketSlice = createSlice({
 	},
 })
 
+export const { searchByName } = rocketSlice.actions
 export const getAllRockets = (state: any) => state.rockets.rockets
 export default rocketSlice.reducer

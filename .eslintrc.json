@@ -55,6 +55,7 @@
 		],
 		"react/destructuring-assignment": "off",
 		"camelcase": "off",
-		"no-unused-vars": "off"
+		"no-unused-vars": "off",
+		"no-param-reassign": "off"
 	}
 }
