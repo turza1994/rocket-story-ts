@@ -4,6 +4,7 @@ import {
 	filterByLaunchDate,
 	filterByLaunchStatus,
 	filterByUpcomingStatus,
+	resetFilter,
 } from '../../redux/rockets/rocketSlice'
 
 function FilterArea() {
@@ -51,6 +52,14 @@ function FilterArea() {
 					<option>By Upcoming Status</option>
 					<option value='0'>Upcoming Rockets</option>
 				</select>
+
+				<button
+					type='button'
+					className='btn btn-outline-light'
+					onClick={() => dispatch(resetFilter())}
+				>
+					Clear Filter
+				</button>
 			</div>
 		</div>
 	)

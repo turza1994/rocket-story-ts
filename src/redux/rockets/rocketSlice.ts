@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const fetchAsyncRockets: any = createAsyncThunk(
@@ -9,7 +9,13 @@ export const fetchAsyncRockets: any = createAsyncThunk(
 	}
 )
 
-const initialState = {
+interface IState {
+	rockets: Object[]
+	filteredRockets: Object[]
+	loading: boolean
+}
+
+const initialState: IState = {
 	rockets: [],
 	filteredRockets: [],
 	loading: false,
@@ -19,14 +25,15 @@ const rocketSlice = createSlice({
 	name: 'rockets',
 	initialState,
 	reducers: {
-		searchByName: (state: any, { payload }: any) => {
+		searchByName: (state: IState, { payload }: PayloadAction<string>) => {
 			const searchString = payload
 			state.filteredRockets = state.rockets.filter((rocket: any) =>
 				rocket.rocket.rocket_name.toLowerCase().includes(searchString.toLowerCase())
 			)
 		},
 
-		filterByLaunchDate: (state: any, { payload }: any) => {
+		filterByLaunchDate: (state: IState, { payload }: PayloadAction<string>) => {
+			const filterValue: Number = parseInt(payload)
 			// today date
 			const dateObj = new Date()
 			const month = dateObj.getUTCMonth() + 1
@@ -35,7 +42,7 @@ const rocketSlice = createSlice({
 
 			const todayDate: any = `${year}/${month}/${day}`
 
-			state.filteredRockets = state.rockets.filter((rocket: any) => {
+			state.filteredRockets = state.filteredRockets.filter((rocket: any) => {
 				const launchDateObj = new Date(rocket.launch_date_local)
 				const launchMonth = launchDateObj.getUTCMonth() + 1
 				const launchDay = launchDateObj.getUTCDate()
@@ -48,36 +55,43 @@ const rocketSlice = createSlice({
 				)
 				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
-				return diffDays <= payload
+				return diffDays <= filterValue
 			})
 		},
 
-		filterByLaunchStatus: (state: any, { payload }: any) => {
+		filterByLaunchStatus: (state: IState, { payload }: PayloadAction<string>) => {
 			if (payload === '0') {
-				state.filteredRockets = state.rockets.filter(
+				state.filteredRockets = state.filteredRockets.filter(
 					(rocket: any) => !rocket.launch_success
 				)
 			}
 			if (payload === '1') {
-				state.filteredRockets = state.rockets.filter(
+				state.filteredRockets = state.filteredRockets.filter(
 					(rocket: any) => rocket.launch_success
 				)
 			}
 		},
 
-		filterByUpcomingStatus: (state: any, { payload }: any) => {
+		filterByUpcomingStatus: (
+			state: IState,
+			{ payload }: PayloadAction<boolean>
+		) => {
 			if (!payload) {
 				state.filteredRockets = state.rockets
 			}
 			if (payload) {
-				state.filteredRockets = state.rockets.filter(
+				state.filteredRockets = state.filteredRockets.filter(
 					(rocket: any) => rocket.upcoming
 				)
 			}
 		},
+
+		resetFilter: (state: IState) => {
+			state.filteredRockets = state.rockets
+		},
 	},
 	extraReducers: {
-		[fetchAsyncRockets.pending]: (state: any) => {
+		[fetchAsyncRockets.pending]: (state: IState) => {
 			console.log('Pending')
 			return { ...state, loading: true }
 		},
@@ -101,6 +115,8 @@ export const {
 	filterByLaunchDate,
 	filterByLaunchStatus,
 	filterByUpcomingStatus,
+	resetFilter,
 } = rocketSlice.actions
+
 export const getAllRockets = (state: any) => state.rockets.rockets
 export default rocketSlice.reducer

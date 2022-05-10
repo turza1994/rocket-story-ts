@@ -5,7 +5,7 @@ import { searchByName } from '../../redux/rockets/rocketSlice'
 
 function Navbar() {
 	const dispatch = useDispatch()
-	const [searchString, setSearchString] = useState('')
+	const [searchString, setSearchString] = useState<string>('')
 
 	const onFormSubmit = (e: any) => {
 		e.preventDefault()
@@ -44,6 +44,7 @@ function Navbar() {
 							value={searchString}
 							aria-label='Search'
 							onChange={e => setSearchString(e.target.value)}
+							required
 						/>
 						<button className='btn btn-outline-light' type='submit'>
 							Search

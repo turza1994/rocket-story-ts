@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAsyncRockets } from '../../redux/rockets/rocketSlice'
 import RocketCard from '../RocketCard/RocketCard'
+import { RootState } from '../../redux/store'
 
 function RocketCollection() {
 	const dispatch = useDispatch()
-	const rockets = useSelector((state: any) => state.rockets)
+	const rockets = useSelector((state: RootState) => state.rockets)
 
 	useEffect(() => {
 		dispatch(fetchAsyncRockets())
