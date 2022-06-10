@@ -27,11 +27,28 @@ const rocketSlice = createSlice({
 		},
 
 		filterByLaunchDate: (state: any, { payload }: any) => {
-			const filterString = parseInt(payload)
-			const date = new Date().getUTCDate()
-			// console.log(date.getTime())
+			// today date
+			const dateObj = new Date()
+			const month = dateObj.getUTCMonth() + 1
+			const day = dateObj.getUTCDate()
+			const year = dateObj.getUTCFullYear()
+
+			const todayDate: any = `${year}/${month}/${day}`
+
 			state.filteredRockets = state.rockets.filter((rocket: any) => {
-				return (date - rocket.launch_date_unix) / (1000 * 60 * 60 * 24) <= 900
+				const launchDateObj = new Date(rocket.launch_date_local)
+				const launchMonth = launchDateObj.getUTCMonth() + 1
+				const launchDay = launchDateObj.getUTCDate()
+				const launchYear = launchDateObj.getUTCFullYear()
+
+				const launchDate: any = `${launchYear}/${launchMonth}/${launchDay}`
+
+				const diffTime = Math.abs(
+					new Date(todayDate).valueOf() - new Date(launchDate).valueOf()
+				)
+				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+				return diffDays <= payload
 			})
 		},
 
@@ -50,13 +67,11 @@ const rocketSlice = createSlice({
 
 		filterByUpcomingStatus: (state: any, { payload }: any) => {
 			if (!payload) {
-				state.filteredRockets = state.rockets.filter(
-					(rocket: any) => !rocket.launch_success
-				)
+				state.filteredRockets = state.rockets
 			}
 			if (payload) {
 				state.filteredRockets = state.rockets.filter(
-					(rocket: any) => rocket.launch_success
+					(rocket: any) => rocket.upcoming
 				)
 			}
 		},

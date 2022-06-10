@@ -1,25 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
 	filterByLaunchDate,
 	filterByLaunchStatus,
+	filterByUpcomingStatus,
 } from '../../redux/rockets/rocketSlice'
 
 function FilterArea() {
 	const dispatch = useDispatch()
-	const [launchDateValue, setLaunchDateValue] = useState('')
-	// const [launchStatusValue, setLaunchStatusValue] = useState(null)
-	console.log(launchDateValue)
 
-	const onSetFilterByLaunchDate = (e: any) => {
-		setLaunchDateValue(e.target.value)
-		dispatch(filterByLaunchDate(launchDateValue))
-		setLaunchDateValue('')
+	const onLaunchDateChange = (e: any) => {
+		dispatch(filterByLaunchDate(e.target.value))
 	}
-
-	// const onSetFilterByLaunchStatus = (e: any) => {
-
-	// }
 
 	return (
 		<div
@@ -32,12 +24,13 @@ function FilterArea() {
 				<select
 					className='form-select w-25 bg-dark text-light fw-bold fs-5 border-dark'
 					aria-label='Default select example'
-					onChange={onSetFilterByLaunchDate}
+					onChange={onLaunchDateChange}
 				>
 					<option>By Launch Date</option>
 					<option value='7'>Last Week</option>
 					<option value='30'>Last Month</option>
 					<option value='365'>Last Year</option>
+					<option value='730'>Last Two Years</option>
 				</select>
 
 				<select
@@ -50,20 +43,14 @@ function FilterArea() {
 					<option value='1'>Success</option>
 				</select>
 
-				<div className='form-check d-flex justify-content-center align-items-center'>
-					<input
-						className='form-check-input fs-4 me-2'
-						type='checkbox'
-						value=''
-						id='flexCheckDefault'
-					/>
-					<label
-						className='form-check-label fw-bold fs-5'
-						htmlFor='flexCheckDefault'
-					>
-						Upcoming
-					</label>
-				</div>
+				<select
+					className='form-select w-25 bg-dark text-light fw-bold fs-5 border-dark'
+					aria-label='Default select example'
+					onChange={e => dispatch(filterByUpcomingStatus(true))}
+				>
+					<option>By Upcoming Status</option>
+					<option value='0'>Upcoming Rockets</option>
+				</select>
 			</div>
 		</div>
 	)

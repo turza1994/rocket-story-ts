@@ -15,7 +15,7 @@ function RocketCard({ data }: any) {
 	return (
 		<div className='col-md-4 d-flex justify-content-center'>
 			<div
-				className='w-100 p-3 rounded-3 d-flex justify-content-center align-items-center'
+				className='w-100 p-1 rounded-3 d-flex justify-content-center align-items-center'
 				style={{ backgroundColor: 'black' }}
 			>
 				<div
@@ -24,7 +24,7 @@ function RocketCard({ data }: any) {
 				>
 					{mission_patch_small ? (
 						<img
-							className='mx-auto rounded pb-2 border-bottom border-3'
+							className='mx-auto rounded pt-2 pb-2 border-bottom border-3 border-light overflow-hidden'
 							src={mission_patch_small}
 							alt='robo friend'
 							style={{ width: '40%' }}

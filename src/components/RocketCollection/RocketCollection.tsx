@@ -6,7 +6,6 @@ import RocketCard from '../RocketCard/RocketCard'
 function RocketCollection() {
 	const dispatch = useDispatch()
 	const rockets = useSelector((state: any) => state.rockets)
-	console.log(rockets)
 
 	useEffect(() => {
 		dispatch(fetchAsyncRockets())
